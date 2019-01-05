@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	
+	<title>Exercicio de Formulários Bootstrap</title>
+</head>
+<body>
+
+	<h1>Exemplos de Inputs para Formularios</h1>
+	<hr>
+	<form>
+		<div class="container-fluid">
+			<div class="col-md-3">
+				<!-- Campo tipo Texto (required significa obrigatório)-->
+				<label for="direcion">Direccion: </label>
+				<input type="text" name="direcion" placeholder="digite o seu endereco" required>
+			</div>
+			
+			<div class="col-md-3">
+				<!-- Campo tipo email (valida se existe o @ para enviar)-->
+				<label for="email">E-mail: </label>
+				<input type="email" name="email" placeholder="digite o seu email" required>
+			</div>
+
+			<div class="col-md-3">
+				<!-- Campo tipo date-->
+				<label for="fecha_nacimiento">Fecha de Nacimiento: </label>
+				<input type="date" name="fecha_nacimiento" placeholder="digite una fecha de nacimiento" required>
+			</div>			
+
+			<div class="col-md-3">
+				<!-- Campo tipo numero -->
+				<label for="edad">Edad: </label>
+				<input type="number" name="edad" placeholder="digite su edad" required>
+			</div>
+
+			<div class="col-md-3">
+				<!-- Campo tipo Check Box -->
+				<label for="vehiculo">Vehiculo: </label>
+				<input type="checkbox" name="vehiculo" value="Moto"> Moto
+				<input type="checkbox" name="vehiculo1" value="Bicicleta"> Bicicleta
+			</div>
+
+			<div class="col-md-3">
+				<!-- Campo tipo Radio Button -->
+				<label for="genero">Genero: </label>
+				<input type="radio" name="genero" value="femenino" checked> Femenino
+				<input type="radio" name="genero" value="masculino"> Masculino
+			</div>
+
+			<div class="col-md-3">
+				<!-- Campo tipo Combo Box -->
+				<label for="ciudad">Ciudad: </label>
+				<select name="ciudad">
+					<option value="cde"> Ciudad del Este </option>
+					<option value="asu"> Asuncion </option>
+				</select>
+			</div>
+
+			<div class="col-md-3">
+				<!-- Campo tipo Text Area -->
+				<label for="mensaje">Obs: </label>
+				<textarea name="mensaje" rows="5" cols="40" required> </textarea>
+			</div>
+
+			<div class="col-md-3">
+				<input type="submit" name="enviar" value="Enviar Formulario"> 
+			</div>
+			
+		</div>
+	</form>
+</body>
+</html>
