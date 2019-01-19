@@ -38,4 +38,25 @@
 		echo "La hora es mayor a 13";
 	} 
 
+	//CONDICIONAL SWITCH
+	echo "<br>";
+	$color="azul";
+	switch ($color) {
+		case 'rojo':
+			echo "mi color favorito es rojo!";
+			break;
+		case 'azul':
+			echo "mi color favorito es azul!";
+			break;
+		case 'amarillo':
+			echo "mi color favorito es amarillo!";
+			break;
+		case 'verde':
+			echo "mi color favorito es verde!";
+			break;
+		default:
+			echo "no tengo un color favorito!";
+			break;
+	}
+
 ?>
