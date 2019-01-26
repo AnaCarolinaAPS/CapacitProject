@@ -12,6 +12,9 @@
 <body>
 
 	<main>
+		<div class="col-sm-12 text-right">
+			<a href="index.php">Volver</a>
+		</div>
 		<div class="col-sm-4">
 			<form method="POST" action="">
 				<h3>Ingrese dos valores</h3>
@@ -31,6 +34,7 @@
 
 		<?php 
 			var_dump($_POST); 
+			$result=null;
 			//echo $_POST["operacion"]."<br>";
 			if (isset($_POST["valor1"]) && isset($_POST["valor2"])) {
 				$valor1 = $_POST["valor1"];

@@ -15,6 +15,7 @@
 			<li><a href="array.php">Arrays o Matrices</a></li>
 			<li><a href="ciclos.php">Ciclos</a></li>
 			<li><a href="operaciones.php">Operaciones/Funciones</a></li>
+			<li><a href="lista-usuarios.php">Listado de Datos</a></li>
 		</ul>
 		
 	</main>

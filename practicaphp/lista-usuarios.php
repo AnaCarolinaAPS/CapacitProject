@@ -1,3 +1,14 @@
+<?php
+	require "../conexion/conexion.php";
+
+	$sql = "SELECT * FROM usuarios";
+	$query = $connection->prepare($sql);
+	$query->execute();
+
+	$result = $query->fetchAll();
+
+	//var_dump($result);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,39 +19,35 @@
 	
 	<!-- INICIO DEL CONTENIDO -->
 	<main>
-		<h1>PRACTICA PHP</h1>
-		<ul>
-			<li><a href="variables.php">Variables</a></li>
-			<li><a href="condicionales.php">Condicionales</a></li>
-			<li><a href="array.php">Arrays o Matrices</a></li>
-			<li><a href="ciclos.php">Ciclos</a></li>
-			<li><a href="operaciones.php">Operaciones/Funciones</a></li>
-		</ul>
-
+		<div class="col-sm-12 text-right">
+			<a href="index.php">Volver</a>
+		</div>
+		
 		<div class="col-sm-12">
+			<h1>Lista de Usuários</h1>
 			<table class="table table-bordered">
 				<thead>
-					<th>ID</th>
-					<th>NOMBRE</th>
-					<th>EMAIL</th>
-					<th>PASSWORD</th>
-					<th>ACCIONES</th>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Email</th>
+					<th>Password</th>
+					<th>Acciones</th>
 				</thead>
 				<tbody>
 					<tr>
-						<td>12</td>
-						<td>Juan</td>
-						<td>juan@gmail.com</td>
-						<td>123456</td>
+						<td>--</td>
+						<td>--</td>
+						<td>--</td>
+						<td>--</td>
 						<td>
 							<a href="">Eliminar</a>
-							<a href="">Editar</a>
+							<a href="">Actualizar</a>
 						</td>
 					</tr>
-				</tbody>
+
+				</tbody>	
 			</table>
 		</div>
-		
 	</main>
 	<!-- /.FIN DEL CONTENIDO -->
 </body>
