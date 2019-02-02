@@ -1,4 +1,9 @@
 <?php
+	session_start();
+	//variable de session creada en el archivo sesiones.php
+	echo $_SESSION['nombre'].'<br>';
+	echo "<a href='salir.php'>Salir</a> <br>";
+
 	require "../conexion/conexion.php";
 
 	$sql = "SELECT * FROM usuarios";
@@ -34,17 +39,18 @@
 					<th>Acciones</th>
 				</thead>
 				<tbody>
-					<tr>
-						<td>--</td>
-						<td>--</td>
-						<td>--</td>
-						<td>--</td>
-						<td>
-							<a href="">Eliminar</a>
-							<a href="">Actualizar</a>
-						</td>
-					</tr>
-
+					<?php foreach ($result as $row) { ?>
+						<tr>
+							<td><?php echo $row['id']; ?></td>
+							<td><?php echo $row['nombre']; ?></td>
+							<td><?php echo $row['email']; ?></td>
+							<td><?php echo $row['password']; ?></td>
+							<td>
+								<a href="">Eliminar</a>
+								<a href="">Actualizar</a>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>	
 			</table>
 		</div>

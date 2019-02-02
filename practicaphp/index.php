@@ -16,6 +16,7 @@
 			<li><a href="ciclos.php">Ciclos</a></li>
 			<li><a href="operaciones.php">Operaciones/Funciones</a></li>
 			<li><a href="lista-usuarios.php">Listado de Datos</a></li>
+			<li><a href="sessiones.php">Sessiones</a></li>
 		</ul>
 		
 	</main>

@@ -1,3 +1,10 @@
+<?php 
+  session_start();
+  if (!isset($_SESSION['logueado'])) {
+    header('Location: login.php');
+  }
+?>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
