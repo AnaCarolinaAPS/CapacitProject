@@ -96,9 +96,7 @@ desired effect
        <!-- LISTADO DE DATOS -->
     <div class="col-sm-12">       
        <div class="box box-default">            
-          
-          
-
+          <?php include 'includes/mensajes.php'; ?>
           <table class="table table-bordered ">
               <thead>
                 <tr>

@@ -1,10 +1,69 @@
 <?php
-session_start();
-if (!isset($_SESSION['logueado'])) {
-  header('Location: login.php');
-}
+  session_start();
+  if (!isset($_SESSION['logueado'])) {
+    header('Location: login.php');
+  }
 
-require "../conexion/conexion.php";
+  require "../conexion/conexion.php";
+
+  $total = 0;
+
+  if (isset($_GET['id']) && isset($_GET['id']) != '') {
+    $id = $_GET['id'];
+
+    try {
+      $sql = "SELECT * FROM usuarios WHERE id = '$id'";
+      $query = $connection->prepare($sql);
+      $query->execute();
+      $total= $query->rowCount();     
+    } catch (Exception $e) {
+      echo $e;
+    }
+  }
+
+  if (isset($_POST) && isset($_POST['actualizar']) == 'actualizar') {
+      if($_POST['nombre'] != '' && $_POST['email'] != '' && $_POST['password'] != '') {
+        //Capturar os dados recebido do formuário via post e guardar em variables
+        $nombre = $_POST['nombre'];
+        if ($_SESSION['psw']== $_POST['password']) {
+          $pass = "";
+        } else {
+          $password = md5($_POST['password']);
+          $pass = "password = '$password', ";
+        }
+
+        $activo = $_POST['activo'];
+        $avatar = $_POST['avatar'];
+        $email = $_POST['email'];
+
+        $sql = "UPDATE usuarios SET nombre = :nombre, email = :email, $pass avatar = :avatar, activo = :activo, fecha_update =NOW() WHERE id = '$id'";
+
+        $data = array(
+          'nombre' => $nombre,
+          'email' => $email,
+          'avatar' => $avatar,
+          'activo' => $activo
+        );
+
+        //var_dump($sql);
+        
+        //var_dump($data);
+        $query = $connection->prepare($sql);
+
+        try {
+          $query->execute($data);
+          $mensaje = '<p class="alert alert-success"> Registro ACTUALIZADO correctamente</p>';
+          //Redirecionamos al listado de usuários com javascript
+          $_SESSION['mensaje']=$mensaje;
+          echo '<script> window.location = "usuarios.php"; </script>';
+        } catch (Exception $e) {
+          $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
+        }
+
+        // var_dump($mensaje);
+      }
+  }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,54 +122,6 @@ desired effect
   <!-- Main Header -->
   <?php include 'includes/header.php'; ?>
 
-  <?php 
-    if (isset($_POST) && isset($_POST['guardar'])) {
-
-      if($_POST['nombre'] != '' && $_POST['descripcion_corta'] != '' && $_POST['descripcion_detallada'] != '' && $_POST['imagen'] != '' && $_POST['precio'] != '' && $_POST['duracion'] != '' && $_POST['dias'] != '') {
-        //Capturar os dados recebido do formuário via post e guardar em variables
-        $nombre = $_POST['nombre'];
-        $descripcion_corta = $_POST['descripcion_corta'];
-        $descripcion_detallada = $_POST['descripcion_detallada'];
-        $imagen = $_POST['imagen'];
-        $precio = $_POST['precio'];
-        $duracion = $_POST['duracion'];
-        $dias = $_POST['dias'];
-        $activo = $_POST['activo'];
-
-        $sql = 'INSERT INTO cursos (nombre, descripcion_corta, descripcion_detallada, imagen, precio, duracion, dias, activo, fecha_add, fecha_update) VALUES (:nombre, :descripcion_corta, :descripcion_detallada, :imagen, :precio, :duracion, :dias, :activo, NOW(), NOW() )';
-
-        $data = array(
-          'nombre' => $nombre,
-          'descripcion_corta' => $descripcion_corta,
-          'descripcion_detallada' => $descripcion_detallada,
-          'imagen' => $imagen,
-          'precio' => $precio,
-          'duracion' =>$duracion,
-          'dias' => $dias,
-          'activo' => $activo
-        );
-
-        //var_dump($data);
-        $query = $connection->prepare($sql);
-
-        //var_dump($query);
-
-        try {
-          $query->execute($data);
-          $mensaje = '<p class="alert alert-success"> Registro INSERIDO correctamente</p>';
-          $_SESSION['mensaje'] = $mensaje;
-          //Redirecionamos al listado de usuários com javascript
-          echo '<script> window.location = "cursos.php"; </script>';
-        } catch (Exception $e) {
-          $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
-        }
-
-        // var_dump($mensaje);
-      }
-
-    }    
-  ?>
-
   <!-- Left side column. contains the logo and sidebar -->
   <?php include 'includes/aside.php'; ?>
 
@@ -119,7 +130,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Registro de Usuarios   <a href="cursos.php" class="btn btn-success">Lista de Cursos</a>      
+        Registro de Usuarios   <a href="usuarios.php" class="btn btn-success">Lista de Usuários</a>      
       </h1>
       
       <ol class="breadcrumb">
@@ -136,43 +147,36 @@ desired effect
       <div class="panel row">            
         <?php 
             //include 'includes/mensajes.php';
-            //var_dump($data);
-            // if (isset($mensaje)) {
-            //   echo $mensaje;
-            // }
+            
+            if ($total > 0) {
+              $usuario = $query->fetch();
+              $_SESSION['psw'] = $usuario['password'];
+
+              //var_dump($usuario);
+            }
         ?>
         <form action="" method="POST">
           <div class="form-group col-md-6">
-            <label>Nombre del Curso</label>
-            <input type="text" name="nombre" class="form-control" required>
+            <label>Nombre de Usuario</label>
+            <input type="text" name="nombre" value="<?php echo $usuario['nombre']?>" class="form-control" required>
 
-            <label>Descripción Corta</label>
-            <input type="text" name="descripcion_corta" class="form-control" required>
+            <label>E-mail</label>
+            <input type="email" name="email" value="<?php echo $usuario['email']?>"class="form-control" required>
 
-            <label>Descripción Detallada</label>
-            <input type="text" name="descripcion_detallada" class="form-control" required>
+            <label>Contraseña</label>
+            <input type="password" name="password" value="<?php echo $usuario['password']?>" class="form-control" required>
 
-            
-            <label>Precio</label>
-            <input type="text" name="precio" class="form-control">
-
-            <label>Duración</label>
-            <input type="text" name="duracion" class="form-control">
-
-            <label>Días</label>
-            <input type="text" name="dias" class="form-control">
-
-            <label>Imagen</label>
-            <input type="text" name="imagen" class="form-control">
+            <label>Avatar</label>
+            <input type="text" name="avatar" value="<?php echo $usuario['avatar']?>"class="form-control">
 
             <label>Activo</label>
             <select class="form-control" name="activo">
-              <option value="1">Sí</option>
-              <option value="0">No</option>
+              <option value="1" <?php if ($usuario['activo'] == '1') { echo " selected";} ?> >Sí</option>
+              <option value="0" <?php if ($usuario['activo'] == '0') { echo " selected";} ?> >No</option>
             </select>
             
             <br>
-            <input type="submit" class="btn btn-success" name="guardar" value="guardar">
+            <input type="submit" class="btn btn-success" name="actualizar" value="actualizar">
           </div>
         </form>          
       </div> 

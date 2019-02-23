@@ -94,12 +94,10 @@ desired effect
     <section class="content container-fluid">
        
        <!-- LISTADO DE DATOS -->
-    <div class="col-sm-12">       
-       <div class="box box-default">            
-          
-          
-
-          <table class="table table-bordered ">
+    <div class="col-sm-12">     
+       <?php include 'includes/mensajes.php'; ?>  
+       <div class="box box-default table-responsive">
+          <table class="table table-bordered">
               <thead>
                 <tr>                  
                   <th>NOMBRE</th>
@@ -124,7 +122,7 @@ desired effect
                   <td><?php echo $row['fecha_add'] ; ?></td>
 
                   <td>
-                    <a href="mensajes-delete.php?id=<?php echo $row['id'] ; ?>" class="btn btn-danger">Eliminar</a>
+                    <a href="mensaje-delete.php?id=<?php echo $row['id'] ; ?>" class="btn btn-danger">Eliminar</a>
                     <a href="mensajes-update.php?id=<?php echo $row['id'] ; ?>" class="disabled btn btn-primary">Editar</a>
                   </td>
 

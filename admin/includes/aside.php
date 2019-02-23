@@ -34,6 +34,7 @@
         <li><a href="cursos.php"><i class="fa fa-link"></i> <span>Cursos</span></a></li>
         <li><a href="mensajes.php"><i class="fa fa-link"></i> <span>Mensajes</span></a></li>
         <li><a href="usuarios.php"><i class="fa fa-link"></i> <span>Usuarios</span></a></li>
+        <li><a href="parametros.php"><i class="fa fa-link"></i> <span>Parametros</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

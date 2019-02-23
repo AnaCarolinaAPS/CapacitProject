@@ -89,7 +89,8 @@ desired effect
 
         try {
           $query->execute($data);
-          $mensaje = '<p class="alert alert-success"> Registrado correctamente</p>';
+          $mensaje = '<p class="alert alert-success"> Registro INSERIDO correctamente</p>';
+          $_SESSION['mensaje']=$mensaje;
           //Redirecionamos al listado de usuários com javascript
           echo '<script> window.location = "usuarios.php"; </script>';
         } catch (Exception $e) {
@@ -125,13 +126,6 @@ desired effect
     <!-- Formulário -->
     <div class="col-sm-12">       
       <div class="panel row">            
-        <?php 
-            include 'includes/mensajes.php';
-            //var_dump($data);
-            // if (isset($mensaje)) {
-            //   echo $mensaje;
-            // }
-        ?>
         <form action="" method="POST">
           <div class="form-group col-md-6">
             <label>Nombre de Usuario</label>

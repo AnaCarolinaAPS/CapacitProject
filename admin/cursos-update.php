@@ -1,10 +1,66 @@
 <?php
-session_start();
-if (!isset($_SESSION['logueado'])) {
-  header('Location: login.php');
-}
+  session_start();
+  if (!isset($_SESSION['logueado'])) {
+    header('Location: login.php');
+  }
 
-require "../conexion/conexion.php";
+  require "../conexion/conexion.php";
+
+  $total = 0;
+
+  if (isset($_GET['id']) && isset($_GET['id']) != '') {
+    $id = $_GET['id'];
+
+    try {
+      $sql = "SELECT * FROM cursos WHERE id = '$id'";
+      $query = $connection->prepare($sql);
+      $query->execute();
+      $total= $query->rowCount();     
+    } catch (Exception $e) {
+      echo $e;
+    }
+  }
+
+  if (isset($_POST) && isset($_POST['actualizar']) == 'actualizar') {
+     if($_POST['nombre'] != '' && $_POST['descripcion_corta'] != '' && $_POST['descripcion_detallada'] != '' && $_POST['imagen'] != '' && $_POST['precio'] != '' && $_POST['duracion'] != '' && $_POST['dias'] != '') {
+        //Capturar os dados recebido do formuário via post e guardar em variables
+        $nombre = $_POST['nombre'];
+        $descripcion_corta = $_POST['descripcion_corta'];
+        $descripcion_detallada = $_POST['descripcion_detallada'];
+        $imagen = $_POST['imagen'];
+        $precio = $_POST['precio'];
+        $duracion = $_POST['duracion'];
+        $dias = $_POST['dias'];
+        $activo = $_POST['activo'];
+
+        $sql = "UPDATE cursos SET nombre = :nombre, descripcion_corta = :descripcion_corta, descripcion_detallada = :descripcion_detallada, imagen = :imagen , precio = :precio, duracion = :duracion, dias = :dias, activo = :activo, fecha_update = NOW() WHERE id = '$id'";
+
+        $data = array(
+          'nombre' => $nombre,
+          'descripcion_corta' => $descripcion_corta,
+          'descripcion_detallada' => $descripcion_detallada,
+          'imagen' => $imagen,
+          'precio' => $precio,
+          'duracion' =>$duracion,
+          'dias' => $dias,
+          'activo' => $activo
+        );
+
+        $query = $connection->prepare($sql);
+
+        try {
+          $query->execute($data);
+          $mensaje = '<p class="alert alert-success"> Registro ACTUALIZADO correctamente</p>';
+          $_SESSION['mensaje'] = $mensaje;
+          //var_dump($_SESSION['mensaje']);
+          //Redirecionamos al listado de usuários com javascript
+          echo '<script> window.location = "cursos.php"; </script>';
+        } catch (Exception $e) {
+          $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
+        }
+      }
+  }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,55 +118,6 @@ desired effect
 
   <!-- Main Header -->
   <?php include 'includes/header.php'; ?>
-
-  <?php 
-    if (isset($_POST) && isset($_POST['guardar'])) {
-
-      if($_POST['nombre'] != '' && $_POST['descripcion_corta'] != '' && $_POST['descripcion_detallada'] != '' && $_POST['imagen'] != '' && $_POST['precio'] != '' && $_POST['duracion'] != '' && $_POST['dias'] != '') {
-        //Capturar os dados recebido do formuário via post e guardar em variables
-        $nombre = $_POST['nombre'];
-        $descripcion_corta = $_POST['descripcion_corta'];
-        $descripcion_detallada = $_POST['descripcion_detallada'];
-        $imagen = $_POST['imagen'];
-        $precio = $_POST['precio'];
-        $duracion = $_POST['duracion'];
-        $dias = $_POST['dias'];
-        $activo = $_POST['activo'];
-
-        $sql = 'INSERT INTO cursos (nombre, descripcion_corta, descripcion_detallada, imagen, precio, duracion, dias, activo, fecha_add, fecha_update) VALUES (:nombre, :descripcion_corta, :descripcion_detallada, :imagen, :precio, :duracion, :dias, :activo, NOW(), NOW() )';
-
-        $data = array(
-          'nombre' => $nombre,
-          'descripcion_corta' => $descripcion_corta,
-          'descripcion_detallada' => $descripcion_detallada,
-          'imagen' => $imagen,
-          'precio' => $precio,
-          'duracion' =>$duracion,
-          'dias' => $dias,
-          'activo' => $activo
-        );
-
-        //var_dump($data);
-        $query = $connection->prepare($sql);
-
-        //var_dump($query);
-
-        try {
-          $query->execute($data);
-          $mensaje = '<p class="alert alert-success"> Registro INSERIDO correctamente</p>';
-          $_SESSION['mensaje'] = $mensaje;
-          //Redirecionamos al listado de usuários com javascript
-          echo '<script> window.location = "cursos.php"; </script>';
-        } catch (Exception $e) {
-          $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
-        }
-
-        // var_dump($mensaje);
-      }
-
-    }    
-  ?>
-
   <!-- Left side column. contains the logo and sidebar -->
   <?php include 'includes/aside.php'; ?>
 
@@ -136,43 +143,44 @@ desired effect
       <div class="panel row">            
         <?php 
             //include 'includes/mensajes.php';
-            //var_dump($data);
-            // if (isset($mensaje)) {
-            //   echo $mensaje;
-            // }
+            if ($total > 0) {
+              $curso = $query->fetch();
+
+              //var_dump($curso);
+            }
         ?>
         <form action="" method="POST">
           <div class="form-group col-md-6">
             <label>Nombre del Curso</label>
-            <input type="text" name="nombre" class="form-control" required>
+            <input type="text" name="nombre" value="<?php echo $curso['nombre']; ?>" class="form-control" required>
 
             <label>Descripción Corta</label>
-            <input type="text" name="descripcion_corta" class="form-control" required>
+            <input type="text" name="descripcion_corta" value="<?php echo $curso['descripcion_corta']; ?>" class="form-control" required>
 
             <label>Descripción Detallada</label>
-            <input type="text" name="descripcion_detallada" class="form-control" required>
+            <input type="text" name="descripcion_detallada" value="<?php echo $curso['descripcion_detallada']; ?>"class="form-control" required>
 
             
             <label>Precio</label>
-            <input type="text" name="precio" class="form-control">
+            <input type="text" name="precio" value="<?php echo $curso['precio']; ?>" class="form-control">
 
             <label>Duración</label>
-            <input type="text" name="duracion" class="form-control">
+            <input type="text" name="duracion" value="<?php echo $curso['duracion']; ?>" class="form-control">
 
             <label>Días</label>
-            <input type="text" name="dias" class="form-control">
+            <input type="text" name="dias" value="<?php echo $curso['dias']; ?>" class="form-control">
 
             <label>Imagen</label>
-            <input type="text" name="imagen" class="form-control">
+            <input type="text" name="imagen" value="<?php echo $curso['imagen']; ?>" class="form-control">
 
             <label>Activo</label>
             <select class="form-control" name="activo">
-              <option value="1">Sí</option>
-              <option value="0">No</option>
+              <option value="1" <?php if ($curso['activo'] == '1') { echo " selected";} ?> >Sí</option>
+              <option value="0" <?php if ($curso['activo'] == '0') { echo " selected";} ?> >No</option>
             </select>
             
             <br>
-            <input type="submit" class="btn btn-success" name="guardar" value="guardar">
+            <input type="submit" class="btn btn-success" name="actualizar" value="actualizar">
           </div>
         </form>          
       </div> 
@@ -205,4 +213,4 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. -->
 </body>
-</html>
+</html>  

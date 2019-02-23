@@ -94,11 +94,9 @@ desired effect
     <section class="content container-fluid">
        
        <!-- LISTADO DE DATOS -->
-    <div class="col-sm-12">       
-       <div class="box box-default">            
-          
-          
-
+    <div class="col-sm-12">           
+       <div class="box box-default">        
+          <?php include 'includes/mensajes.php'; ?>       
           <table class="table table-bordered ">
               <thead>
                 <tr>
@@ -120,8 +118,8 @@ desired effect
                   <td><?php echo $row['avatar'] ; ?></td>
                   <td><?php echo $row['password'] ; ?></td>
                   <td>
-                    <a href="usuarios-delete.php?id=<?php echo $row['id'] ; ?>" class="btn btn-danger">Eliminar</a>
-                    <a href="usuarios-update.php?id=<?php echo $row['id'] ; ?>" class="btn btn-primary">Editar</a>
+                    <a href="usuario-delete.php?id=<?php echo $row['id'] ; ?>" class="btn btn-danger">Eliminar</a>
+                    <a href="usuario-update.php?id=<?php echo $row['id'] ; ?>" class="btn btn-primary">Editar</a>
                   </td>
 
                 </tr>
