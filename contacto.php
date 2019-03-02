@@ -1,7 +1,8 @@
+<?php include "funciones/funciones.php";?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>GoAna Bootstrap - Contacto</title>
+	<title>Contacto | <?php echo parametros()['empresa']; ?></title>
 	<!-- Descrição da Página para o google-->
 	<meta name="description" content="Curso de programación y diseño en CDE - PY">
 	<!-- Palavras Chave da Página para o google-->
@@ -36,16 +37,25 @@
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Telefono</h4>
-							<span>0983112965</span>
+							<span><?php echo parametros()['telefono']; ?></span>
 						</div>
-					</div>
+					</div>	
+					<div class="media">
+						<div class="media-left">
+							<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">Whatsapp</h4>
+							<span><?php echo parametros()['whatsapp']; ?></span>
+						</div>
+					</div>				
 					<div class="media">
 						<div class="media-left">
 							<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Email</h4>
-							<span>miemail@mipagina.com</span>
+							<span><?php echo parametros()['email']; ?></span>
 						</div>
 					</div>
 					<div class="media">
@@ -54,7 +64,16 @@
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Dirección</h4>
-							<span>Av. San Blas. Km 3 1/2 <br> Ciudad del Este - PY</span>
+							<span><?php echo parametros()['direccion']; ?></span>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left">
+							<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">Horário de Atención</h4>
+							<span><?php echo parametros()['horario']; ?></span>
 						</div>
 					</div>
 				</div>
@@ -81,7 +100,7 @@
 			<div class="container-fluid">
 				<div class="container">
 					<div class="row">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14403.860518913816!2d-54.628910154492175!3d-25.506209456037062!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb12fbfc9747b41e3!2sCapacit!5e0!3m2!1spt-BR!2spy!4v1546711618368" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+					<iframe src="<?php echo parametros()['google_maps']; ?>" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 				</div>
 				</div>			
 			</div>

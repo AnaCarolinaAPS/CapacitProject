@@ -7,4 +7,4 @@
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
 <!-- FONTs -->
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
-
+<script src="js/bootstrap.min.js"></script>

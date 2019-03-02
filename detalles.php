@@ -1,8 +1,14 @@
+<?php include "funciones/funciones.php";
+	// if (isset($_GET['id'])) {
+	// 	getDetalleCurso($_GET['id']);
+	// }
+?>
 <!DOCTYPE html>
 <html>
 <head>
+	<title><?php echo getDetalleCurso($_GET['id'])['nombre']?> | <?php echo parametros()['empresa']; ?></title>
 	<!-- Descrição da Página para o google-->
-	<meta name="description" content="Curso de programación y diseño en CDE - PY">
+	<meta name="description" content="?php echo getDetalleCurso($_GET['id'])['descripcion_corta']?>">
 	<!-- Palavras Chave da Página para o google-->
 	<meta name="keywords" content="programación, cursos, desarollo web, ciudad del este">
 	
@@ -10,6 +16,19 @@
 	<?php include 'includes/head.php'; ?>
 	<!-- /.FIN DEL HEADER -->
 
+	<!-- trocando a imagem do fundo com PHP -->
+	<?php $imagem = getDetalleCurso($_GET['id'])['imagen']?>
+	<style type="text/css">
+	#banner-medio {	
+		min-height: 350px;
+		background: url('imagenes/<?php echo $imagem; ?>');
+		text-align: center;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	</style>
+	
 </head>
 <body>
 	<!-- INICIO DEL HEADER -->
@@ -18,10 +37,18 @@
 	
 	<!-- INICIO DEL CONTENIDO -->
 	<main>
-		<section class="main-header">
+<!-- 		<section class="main-header">
 			<div class="container">
-				<h1>Titulo del Curso</h1>
-				<h2>Descripción Corta del Curso: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod empor incididunt ut labore et dolore magna aliqua.</h2>
+				
+			</div>
+		</section>
+ -->
+		<section id="banner-medio">
+			<div class="container">
+				<div class="info-banner-medio">
+					<h1><?php echo getDetalleCurso($_GET['id'])['nombre']?></h1>
+				<h2><?php echo getDetalleCurso($_GET['id'])['descripcion_corta']?></h2>
+				</div>
 			</div>
 		</section>
 
@@ -36,7 +63,7 @@
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Precio</h4>
-							<span>500.000 GS</span>
+							<span><?php echo getDetalleCurso($_GET['id'])['precio']?></span>
 						</div>
 					</div>
 					<!-- FIN DEL PRECIO -->
@@ -48,7 +75,7 @@
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Duración</h4>
-							<span>5 meses</span>
+							<span><?php echo getDetalleCurso($_GET['id'])['duracion']?></span>
 						</div>
 					</div>
 					<!-- FIN DE LA DURACION -->
@@ -60,13 +87,14 @@
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">Días</h4>
-							<span>Lunes y Viernes</span>
+							<span><?php echo getDetalleCurso($_GET['id'])['dias']?></span>
 						</div>
 					</div>
 					<!-- FIN DE LA FREQUENCIA -->
 				</div>
 				<div class="col-md-9">
 					<p>Descripción</p>
+					<?php echo getDetalleCurso($_GET['id'])['descripcion_detallada']?>
 				</div>
 			</div>
 			

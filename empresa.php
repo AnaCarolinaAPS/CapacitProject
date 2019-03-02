@@ -1,7 +1,8 @@
+<?php include "funciones/funciones.php";?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Empresa</title>
+	<title>Empresa | <?php echo parametros()['empresa']; ?></title>
 	<!-- Descrição da Página para o google-->
 	<meta name="description" content="Curso de programación y diseño en CDE - PY">
 	<!-- Palavras Chave da Página para o google-->
