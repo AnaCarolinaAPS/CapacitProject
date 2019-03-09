@@ -17,7 +17,13 @@
 	<!-- INICIO DEL HEADER -->
 	<?php include 'includes/header.php'; ?>
 	<!-- /.FIN DEL HEADER -->
+	<?php 
 
+		if (isset($_POST) && isset($_POST['enviar'])) {
+			$_SESSION['mensaje'] = registrar_mensaje($_POST);
+			//$_SESSION['mensaje'] = enviar_email($_POST);
+		}
+	?>
 	<!-- INICIO DEL CONTENIDO -->
 	<main>
 		<section class="main-header">
@@ -29,6 +35,7 @@
 
 		<section class="contenido">
 			<div class="container">
+				<?php include 'includes/mensajes.php'; ?>
 				<div class="col-md-3">
 					<h3>Informaciones</h3>
 					<div class="media">
@@ -79,7 +86,9 @@
 				</div>
 				<div class="col-md-9">
 					<h3>Formulario de Contacto</h3>
-					<form>
+					<form action="" method="POST">
+						<input type="email" name="email" class="form-control" placeholder="E-mail" required>
+
 						<input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
 
 						<input type="text" name="apellido" class="form-control" placeholder="Apellido">
@@ -91,7 +100,7 @@
 						<label for="mensaje">Mensaje</label>
 						<textarea name="mensaje" class="form-control" required> </textarea>
 
-						<button type="submit" name="enviar" class="btn btn-success">Enviar Mensaje</button>
+						<button type="submit" name="enviar" value="enviar" class="btn btn-success">Enviar Mensaje</button>
 					</form>
 				</div>
 			</div>

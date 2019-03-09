@@ -1,4 +1,21 @@
-<?php require '../conexion/conexion.php';  ?>
+<?php
+  require "../conexion/conexion.php";
+
+    if (isset($_SESSION['usuario_id'])) {
+      $id = $_SESSION['usuario_id'];
+
+      //$user['nombre'] = $id;
+      try {
+        $sqlus = "SELECT * FROM usuarios WHERE id = '$id'";
+        $queryus = $connection->prepare($sqlus);
+        $queryus->execute();
+        $user= $queryus->fetch();
+        //$total= $query->rowCount();     
+      } catch (Exception $e) {
+        echo $e;
+      }
+    }
+?>
   <header class="main-header">
     <!-- Logo -->
     <a href="index2.html" class="logo">
@@ -33,7 +50,7 @@
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="../imagenes/<?php echo $user['avatar']; ?>" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -118,17 +135,17 @@
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="../imagenes/<?php echo $user['avatar']; ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs"><?php echo $user['nombre']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../imagenes/<?php echo $user['avatar']; ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  <?php echo $user['nombre']; ?> - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>

@@ -36,6 +36,14 @@ require "../conexion/conexion.php";
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script>
+    function subir_imagen(input, carpeta){
+          self.name = 'opener';
+          var name = document.getElementsByName("nombre")[0].value;
+          remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
+          remote.focus();
+        }
+  </script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -144,7 +152,8 @@ desired effect
             </select>
             
             <label>Avatar</label>
-            <input type="text" name="avatar" class="form-control">
+            <input type="text" name="avatar" class="form-control" id="imagen"  onclick="subir_imagen('avatar', 'imagenes')">
+            <!-- <input type="text" name="avatar" class="form-control"> -->
 
             <br>
             <input type="submit" class="btn btn-success" name="guardar" value="guardar">

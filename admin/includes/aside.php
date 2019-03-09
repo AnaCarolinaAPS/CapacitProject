@@ -1,3 +1,24 @@
+<?php
+  require "../conexion/conexion.php";
+
+    if (isset($_SESSION['usuario_id'])) {
+      $id = $_SESSION['usuario_id'];
+
+      //$user['nombre'] = $id;
+      try {
+        $sqlus = "SELECT * FROM usuarios WHERE id = '$id'";
+        $queryus = $connection->prepare($sqlus);
+        $queryus->execute();
+        $user= $queryus->fetch();
+        //$total= $query->rowCount();     
+      } catch (Exception $e) {
+        echo $e;
+      }
+    }
+
+  
+?>
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -5,10 +26,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../imagenes/<?php echo $user['avatar']; ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Ana Carolina</p>
+          <p><?php echo $user['nombre']; ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>

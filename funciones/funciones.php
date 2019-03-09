@@ -41,7 +41,7 @@
 			$limit = 'LIMIT '.$cantidad;
 		}
 
-		$sql = "SELECT * FROM cursos ".$limit;
+		$sql = "SELECT * FROM cursos WHERE activo = 1 ".$limit;
 		$query = $connection->prepare($sql);
 		$query->execute();
 
@@ -65,5 +65,44 @@
 			return $query->fetchAll();
 		}		
 		return 0;
+	}
+
+	function registrar_mensaje ($post){
+		include 'conexion/conexion.php';
+
+		try {
+			$sql = "INSERT INTO mensajes (nombre, email, asunto, telefono, mensaje, fecha_add) VALUES (:nombre, :email, :asunto, :telefono, :mensaje, NOW())";
+
+			$data = array(
+				'nombre' => $post['nombre'],
+				'email' => $post['email'],
+				'asunto' => $post['asunto'],
+				'telefono' => $post['telefono'],
+				'mensaje' => $post['mensaje']
+			);
+
+			$query = $connection->prepare($sql);
+			if ($query->execute($data)) {
+				$mensaje = '<p class="alert alert-success"> Mensaje REGISTRADO correctamente</p>';
+			}
+			else {
+				$mensaje = '<p class="alert alert-success"> No se pudo insertar en la base de datos</p>';
+			}
+		}
+		catch (PDOException $e) {
+			$mensaje = "Error >>>> ".$e;
+		}
+
+		return $mensaje;
+	}
+
+	function enviar_email($post) {
+		$headers = "From: ".$post['email'];
+		if (mail('sac@gmail.com', $post['asunto'], $post['mensaje'], $headers)){
+			$mensaje = '<p class="alert alert-success"> Email ENVIADO correctamente</p>';
+		} else {
+			$mensaje = '<p class="alert alert-danger"> Email NO pudo ser enviado correctamente</p>';
+		}
+		return $mensaje;
 	}
 ?>

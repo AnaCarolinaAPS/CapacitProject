@@ -36,6 +36,15 @@ require "../conexion/conexion.php";
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script>
+    function subir_imagen(input, carpeta){
+          self.name = 'opener';
+          var name = document.getElementsByName("nombre")[0].value;
+          remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
+          remote.focus();
+        }
+  </script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -141,7 +150,7 @@ desired effect
             //   echo $mensaje;
             // }
         ?>
-        <form action="" method="POST">
+        <form action="" method="POST" name="form">
           <div class="form-group col-md-6">
             <label>Nombre del Curso</label>
             <input type="text" name="nombre" class="form-control" required>
@@ -152,7 +161,6 @@ desired effect
             <label>Descripción Detallada</label>
             <input type="text" name="descripcion_detallada" class="form-control" required>
 
-            
             <label>Precio</label>
             <input type="text" name="precio" class="form-control">
 
@@ -163,7 +171,8 @@ desired effect
             <input type="text" name="dias" class="form-control">
 
             <label>Imagen</label>
-            <input type="text" name="imagen" class="form-control">
+            <input type="text" name="imagen" class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'imagenes')">
+            <!-- <input type="text" name="imagen" class="form-control"> -->
 
             <label>Activo</label>
             <select class="form-control" name="activo">

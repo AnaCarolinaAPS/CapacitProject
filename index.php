@@ -20,11 +20,8 @@
 
 	<div class="container-fluid text-center" id="banner">
 		<div class="container">
-			<h1>Titulo de mi pagina</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+			<h1><?php echo parametros()['titulo_inicio']; ?></h1>
+			<p><?php echo parametros()['desc_inicio']; ?></p>
 			<a class="btn btn-success" href="">Solicitar Informaciones!</a>
 		</div>
 	</div>

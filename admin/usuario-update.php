@@ -95,6 +95,15 @@
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script>
+    function subir_imagen(input, carpeta){
+          self.name = 'opener';
+          var name = document.getElementsByName("nombre")[0].value;
+          remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
+          remote.focus();
+        }
+  </script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -151,11 +160,10 @@ desired effect
             if ($total > 0) {
               $usuario = $query->fetch();
               $_SESSION['psw'] = $usuario['password'];
-
               //var_dump($usuario);
             }
         ?>
-        <form action="" method="POST">
+        <form action="" method="POST" name="form">
           <div class="form-group col-md-6">
             <label>Nombre de Usuario</label>
             <input type="text" name="nombre" value="<?php echo $usuario['nombre']?>" class="form-control" required>
@@ -167,7 +175,8 @@ desired effect
             <input type="password" name="password" value="<?php echo $usuario['password']?>" class="form-control" required>
 
             <label>Avatar</label>
-            <input type="text" name="avatar" value="<?php echo $usuario['avatar']?>"class="form-control">
+            <input type="text" name="avatar" class="form-control" id="imagen"  onclick="subir_imagen('avatar', 'imagenes')" value="<?php echo $usuario['avatar']?>">
+            <!-- <input type="text" name="avatar" value="<?php //echo $usuario['avatar']?>"class="form-control"> -->
 
             <label>Activo</label>
             <select class="form-control" name="activo">

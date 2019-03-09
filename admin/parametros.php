@@ -41,8 +41,11 @@
         $youtube = $_POST['youtube'];
         $google_maps = $_POST['google_maps'];
         $descripcion = $_POST['descripcion'];
+        $titulo_inicio = $_POST['titulo_inicio'];
+        $desc_inicio = $_POST['desc_inicio'];
+        $sobre_nosotros = $_POST['sobre_nosotros'];
         
-        $sql = "UPDATE parametros SET empresa = :empresa, logo = :logo, favicon = :favicon, telefono = :telefono, whatsapp = :whatsapp, direccion = :direccion, email = :email, horario = :horario, facebook = :facebook, instagram = :instagram, twitter = :twitter, youtube = :youtube, google_maps = :google_maps, descripcion = :descripcion WHERE id = '$id'";
+        $sql = "UPDATE parametros SET empresa = :empresa, logo = :logo, favicon = :favicon, telefono = :telefono, whatsapp = :whatsapp, direccion = :direccion, email = :email, horario = :horario, facebook = :facebook, instagram = :instagram, twitter = :twitter, youtube = :youtube, google_maps = :google_maps, descripcion = :descripcion, titulo_inicio = :titulo_inicio,  desc_inicio = :desc_inicio, sobre_nosotros = :sobre_nosotros  WHERE id = '$id'";
 
         $data = array(
           'empresa' => $empresa,
@@ -58,7 +61,10 @@
           'twitter' => $twitter,
           'youtube' => $youtube,
           'google_maps' => $google_maps,
-          'descripcion' => $descripcion          
+          'descripcion' => $descripcion,
+          'titulo_inicio' => $titulo_inicio,
+          'desc_inicio' => $desc_inicio,
+          'sobre_nosotros' => $sobre_nosotros
         );
 
         $query = $connection->prepare($sql);
@@ -97,6 +103,8 @@
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
 
+  <script src="bower_components/jQuery/dist/jquery.min.js"></script>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -107,6 +115,16 @@
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script>
+    function subir_imagen(input, carpeta){
+          self.name = 'opener';
+          var name = document.getElementsByName("empresa")[0].value;
+          remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
+          remote.focus();
+        }
+
+  </script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -165,13 +183,20 @@ desired effect
               //var_dump($parametro);
             }
         ?>
-        <form action="" method="POST">
+        <form action="" method="POST" name="form">
           <div class="form-group col-md-6">
             <label>Nombre de la Empresa</label>
             <input type="text" name="empresa" value="<?php echo $parametro['empresa']; ?>" class="form-control" required>
 
+            <label>Descripcion</label>
+            <input type="text" name="descripcion" value="<?php echo $parametro['descripcion']; ?>" class="form-control" required>
+
+            <!-- <label>Logo</label> -->
+            <!-- <div class="form-group col-md-12"> -->
             <label>Logo</label>
-            <input type="text" name="logo" value="<?php echo $parametro['logo']; ?>" class="form-control" required>
+            <input type="text" name="logo" class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'imagenes')" value="<?php echo $parametro['logo']; ?>">
+            <!-- </div> -->
+            <!-- <input type="text" name="logo" value="<?php echo $parametro['logo']; ?>" class="form-control" required> -->
 
             <label>Favicon</label>
             <input type="text" name="favicon" value="<?php echo $parametro['favicon']; ?>" class="form-control" required>
@@ -206,8 +231,14 @@ desired effect
             <label>Google Maps</label>
             <input type="text" name="google_maps" value="<?php echo $parametro['google_maps']; ?>" class="form-control">
 
-            <label>Descripcion</label>
-            <input type="text" name="descripcion" value="<?php echo $parametro['descripcion']; ?>" class="form-control" required>
+            <label>Titulo del Inicio</label>
+            <input type="text" name="titulo_inicio" value="<?php echo $parametro['titulo_inicio']; ?>" class="form-control" required>
+
+            <label>Descrición del Inicio</label>
+            <input type="text" name="desc_inicio" value="<?php echo $parametro['desc_inicio']; ?>" class="form-control" required>
+
+            <label>Sobre Nosotros</label>
+            <input type="text" name="sobre_nosotros" value="<?php echo $parametro['sobre_nosotros']; ?>" class="form-control" required>
 
             <br>
             <input type="submit" class="btn btn-success" name="actualizar" value="actualizar">

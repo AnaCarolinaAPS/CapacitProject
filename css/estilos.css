@@ -141,3 +141,15 @@ hr {
 	border-radius: 8px;
 }
 /*Fim Pagina Contacto*/
+
+.navbar-inverse {
+    background-color: #222;
+    border-color: #080808;
+}
+.navbar {
+	border-radius: 0px;
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border: 0px;
+}
