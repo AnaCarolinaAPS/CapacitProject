@@ -22,7 +22,7 @@
 		<div class="container">
 			<h1><?php echo parametros()['titulo_inicio']; ?></h1>
 			<p><?php echo parametros()['desc_inicio']; ?></p>
-			<a class="btn btn-success" href="">Solicitar Informaciones!</a>
+			<a class="btn btn-success" href="contacto.php">Solicitar Informaciones!</a>
 		</div>
 	</div>
 

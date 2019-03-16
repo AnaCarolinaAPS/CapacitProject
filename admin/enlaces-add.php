@@ -36,15 +36,6 @@ require "../conexion/conexion.php";
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-  <script>
-    function subir_imagen(input, carpeta){
-          self.name = 'opener';
-          var name = document.getElementsByName("nombre")[0].value;
-          remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
-          remote.focus();
-        }
-  </script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -75,28 +66,22 @@ desired effect
   <?php 
     if (isset($_POST) && isset($_POST['guardar'])) {
 
-      if($_POST['nombre'] != '' && $_POST['descripcion_corta'] != '' && $_POST['descripcion_detallada'] != '' && $_POST['imagen'] != '' && $_POST['precio'] != '' && $_POST['duracion'] != '' && $_POST['dias'] != '') {
+      if($_POST['nombre'] != '' && $_POST['padre'] != '' && $_POST['posicion'] != '' && $_POST['url'] != '' && $_POST['activo']) {
         //Capturar os dados recebido do formuário via post e guardar em variables
         $nombre = $_POST['nombre'];
-        $descripcion_corta = $_POST['descripcion_corta'];
-        $descripcion_detallada = $_POST['descripcion_detallada'];
-        $imagen = $_POST['imagen'];
-        $precio = $_POST['precio'];
-        $duracion = $_POST['duracion'];
-        $dias = $_POST['dias'];
-        $activo = $_POST['activo'];
+        $id_padre = $_POST['padre'];
+        $posicion = $_POST['posicion'];
+        $url = $_POST['url'];
+        $visible = $_POST['activo'];
 
-        $sql = 'INSERT INTO cursos (nombre, descripcion_corta, descripcion_detallada, imagen, precio, duracion, dias, activo, fecha_add, fecha_update) VALUES (:nombre, :descripcion_corta, :descripcion_detallada, :imagen, :precio, :duracion, :dias, :activo, NOW(), NOW() )';
+        $sql = 'INSERT INTO links (nombre, id_padre, posicion, url, visible, target, fecha_add, fecha_update) VALUES (:nombre, :id_padre, :posicion, :url, :visible, "_parent", NOW(), NOW() )';
 
         $data = array(
           'nombre' => $nombre,
-          'descripcion_corta' => $descripcion_corta,
-          'descripcion_detallada' => $descripcion_detallada,
-          'imagen' => $imagen,
-          'precio' => $precio,
-          'duracion' =>$duracion,
-          'dias' => $dias,
-          'activo' => $activo
+          'id_padre' => $id_padre,
+          'posicion' => $posicion,
+          'url' => $url,
+          'visible' => $visible
         );
 
         //var_dump($data);
@@ -107,14 +92,15 @@ desired effect
         try {
           $query->execute($data);
           $mensaje = '<p class="alert alert-success"> Registro INSERIDO correctamente</p>';
-          $_SESSION['mensaje'] = $mensaje;
           //Redirecionamos al listado de usuários com javascript
-          echo '<script> window.location = "cursos.php"; </script>';
+          echo '<script> window.location = "enlaces.php"; </script>';
         } catch (Exception $e) {
           $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
         }
 
-        // var_dump($mensaje);
+        $_SESSION['mensaje'] = $mensaje;
+
+        //var_dump($mensaje);
       }
 
     }    
@@ -128,7 +114,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Registro de Cursos   <a href="cursos.php" class="btn btn-success">Lista de Cursos</a>      
+        Registro de Enlaces   <a href="enlaces.php" class="btn btn-success">Lista de Enlaces</a>      
       </h1>
       
       <ol class="breadcrumb">
@@ -152,27 +138,29 @@ desired effect
         ?>
         <form action="" method="POST" name="form">
           <div class="form-group col-md-6">
-            <label>Nombre del Curso</label>
+            <label>Nombre del Enlace</label>
             <input type="text" name="nombre" class="form-control" required>
 
-            <label>Descripción Corta</label>
-            <input type="text" name="descripcion_corta" class="form-control" required>
+            <label>Enlace Padre</label>
+            <select class="form-control" name="padre">                 
+              <?php
+                $sql = "SELECT id, nombre FROM links WHERE visible = 1";
+                $query2 = $connection->prepare($sql);
+                $query2->execute();   
+                $link_padre= $query2->fetchAll();
 
-            <label>Descripción Detallada</label>
-            <input type="text" name="descripcion_detallada" class="form-control" required>
+                echo "<option value=0>-</option>";
+                foreach ($link_padre as $link) {
+                  echo "<option value=".$link['id'].">".$link['nombre']."</option>";
+                }
+              ?>  
+            </select>
 
-            <label>Precio</label>
-            <input type="text" name="precio" class="form-control">
+            <label>Posicion en Submenu</label>
+            <input type="number" name="posicion" value="0" class="form-control" required>
 
-            <label>Duración</label>
-            <input type="text" name="duracion" class="form-control">
-
-            <label>Días</label>
-            <input type="text" name="dias" class="form-control">
-
-            <label>Imagen</label>
-            <input type="text" name="imagen" class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'imagenes')">
-            <!-- <input type="text" name="imagen" class="form-control"> -->
+            <label>URL</label>
+            <input type="text" name="url" value="#" class="form-control">
 
             <label>Activo</label>
             <select class="form-control" name="activo">

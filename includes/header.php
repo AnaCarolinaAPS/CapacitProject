@@ -19,12 +19,31 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
       	<?php
-      		foreach (getLinks() as $link) {
+          if ($menu_padre = getMenuPadre(1)) {
+              foreach ($menu_padre as $fila) {
+                if($menu_hijo = getMenuHijo($fila['id'])) { ?>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspoup="true" aria-expanded="false"><?php echo $fila['nombre']?><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <?php foreach ($menu_hijo as $fila_hijo) {
+                        ?>
+                        <li><a href="<?php echo $fila_hijo['url']?>"><?php echo $fila_hijo['nombre']?></a></li>                        
+                      <? }
+
+                      ?>
+                    </ul>
+
+                  </li>
+                <?php
+                }
+                else { ?>
+                  <li><a href="<?php echo $fila['url']?>"><?php echo $fila['nombre']?></a></li>
+                <?php   
+                }
+              }
+          }
       	?>
-        	<li><a href="<?php echo $link['url']?>"><?php echo $link['nombre']?></a></li>
-        <?php
-      		}
-      	?>
+        	<!-- <li><a href="<?php //echo $link['url']?>"><?php //echo $link['nombre']?></a></li> -->        
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">

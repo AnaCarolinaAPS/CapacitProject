@@ -67,6 +67,36 @@
 		return 0;
 	}
 
+	function getMenuPadre($posicion){
+		include 'conexion/conexion.php';
+
+		$sql = "SELECT * FROM links WHERE id_padre = 0 AND posicion = ".$posicion;
+		$query = $connection->prepare($sql);
+		$query->execute();
+
+		//Caso exista links
+		if ($query->rowCount() > 0) {
+			//Devolve o Array com os dados
+			return $query->fetchAll();
+		}		
+		return false;
+	}
+
+	function getMenuHijo ($id_padre) {
+		include 'conexion/conexion.php';
+
+		$sql = "SELECT * FROM links WHERE id_padre = ".$id_padre." ORDER BY posicion ";
+		$query = $connection->prepare($sql);
+		$query->execute();
+
+		//Caso exista links
+		if ($query->rowCount() > 0) {
+			//Devolve o Array com os dados
+			return $query->fetchAll();
+		}		
+		return false;
+	}
+
 	function registrar_mensaje ($post){
 		include 'conexion/conexion.php';
 
