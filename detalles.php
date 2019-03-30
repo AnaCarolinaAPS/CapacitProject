@@ -19,14 +19,14 @@
 	<!-- trocando a imagem do fundo com PHP -->
 	<?php $imagem = getDetalleCurso($_GET['id'])['imagen']?>
 	<style type="text/css">
-	#banner-medio {	
-		min-height: 350px;
-		background: url('imagenes/<?php echo $imagem; ?>');
-		text-align: center;
-		background-attachment: fixed;
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
+		#banner-medio {	
+			min-height: 350px;
+			background: url('imagenes/<?php echo $imagem; ?>');
+			text-align: center;
+			background-attachment: fixed;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
 	</style>
 	
 </head>

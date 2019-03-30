@@ -20,8 +20,8 @@
 	<?php 
 
 		if (isset($_POST) && isset($_POST['enviar'])) {
-			$_SESSION['mensaje'] = registrar_mensaje($_POST);
-			//$_SESSION['mensaje'] = enviar_email($_POST);
+			// $_SESSION['mensaje'] = registrar_mensaje($_POST);
+			$_SESSION['mensaje'] = enviar_email($_POST);
 		}
 	?>
 	<!-- INICIO DEL CONTENIDO -->

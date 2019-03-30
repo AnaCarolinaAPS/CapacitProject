@@ -17,6 +17,17 @@
 		return $query->fetch();
 	}
 
+	function banner() {
+		include 'conexion/conexion.php';
+
+		$sql = "SELECT * FROM banner WHERE activo = 1 ORDER BY posicion";
+		$query = $connection->prepare($sql);
+		$query->execute();
+
+		//Devolve o Array com os dados
+		return $query->fetchAll();
+	}
+
 	function getDetalleCurso($id) {
 		include 'conexion/conexion.php';
 
@@ -128,7 +139,7 @@
 
 	function enviar_email($post) {
 		$headers = "From: ".$post['email'];
-		if (mail('sac@gmail.com', $post['asunto'], $post['mensaje'], $headers)){
+		if (mail('anacarolinaaps@gmail.com', $post['asunto'], $post['mensaje'], $headers)){
 			$mensaje = '<p class="alert alert-success"> Email ENVIADO correctamente</p>';
 		} else {
 			$mensaje = '<p class="alert alert-danger"> Email NO pudo ser enviado correctamente</p>';

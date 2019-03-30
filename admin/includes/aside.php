@@ -56,6 +56,7 @@
         <li><a href="mensajes.php"><i class="fa fa-link"></i> <span>Mensajes</span></a></li>
         <li><a href="usuarios.php"><i class="fa fa-link"></i> <span>Usuarios</span></a></li>
         <li><a href="enlaces.php"><i class="fa fa-link"></i> <span>Enlaces</span></a></li>
+        <li><a href="banner.php"><i class="fa fa-link"></i> <span>Banner</span></a></li>
         <li><a href="parametros.php"><i class="fa fa-link"></i> <span>Parametros</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->

@@ -12,19 +12,47 @@
 	<?php include 'includes/head.php'; ?>
 	<!-- /.FIN DEL HEADER -->
 
+	<!-- <style type="text/css">
+		.banner {	
+			min-height: 350px;
+			background: url('imagenes/imagen_1552158214.jpg');
+			text-align: center;
+			background-attachment: fixed;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style> -->
 </head>
 <body>
 	<!-- INICIO DEL HEADER -->
 	<?php include 'includes/header.php'; ?>
 	<!-- /.FIN DEL HEADER -->
 
-	<div class="container-fluid text-center" id="banner">
+	<div class="text-center owl-carousel owl-theme">
+	    <?php 
+	    	foreach (banner() as $banner) {
+	    	?>
+		    <div class="owl-banner" style="background: url('imagenes/<?php echo $banner['imagen']; ?>'); background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+		    	<br>
+		    	<br>
+		    	<br>
+		    	<br>
+		    	<!-- <div style="background: white; opacity: 0.75; width: 100%; height: 100%;"> -->
+		    		<h1><?php echo $banner['titulo']; ?></h1>
+			    	<p><?php echo $banner['descripcion']; ?></p>
+					<a class="btn btn-success" href="<?php echo $banner['url']; ?>"><?php echo $banner['titulobtn']; ?></a>
+		    	<!-- </div>		    	 -->
+		    </div>
+		   <?php }	
+	    	?>
+	</div>
+	<!-- <div class="container-fluid text-center" id="banner">
 		<div class="container">
-			<h1><?php echo parametros()['titulo_inicio']; ?></h1>
-			<p><?php echo parametros()['desc_inicio']; ?></p>
+			<h1><?php //echo parametros()['titulo_inicio']; ?></h1>
+			<p><?php //echo parametros()['desc_inicio']; ?></p>
 			<a class="btn btn-success" href="contacto.php">Solicitar Informaciones!</a>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- INICIO DEL CONTENIDO -->
 	<main>
@@ -112,5 +140,26 @@
 	<!-- /.FIN DEL FOOTER -->	
 
 	<?php include 'includes/scripts.php'; ?>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			 $('.owl-carousel').owlCarousel({
+			    loop:true,
+			    margin:10,
+			    nav:true,
+			    responsive:{
+			        0:{
+			            items:1
+			        },
+			        600:{
+			            items:1
+			        },
+			        1000:{
+			            items:1
+			        }
+			    }
+			})
+		});
+	</script>
 </body>
 </html>

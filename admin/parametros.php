@@ -41,11 +41,9 @@
         $youtube = $_POST['youtube'];
         $google_maps = $_POST['google_maps'];
         $descripcion = $_POST['descripcion'];
-        $titulo_inicio = $_POST['titulo_inicio'];
-        $desc_inicio = $_POST['desc_inicio'];
         $sobre_nosotros = $_POST['sobre_nosotros'];
         
-        $sql = "UPDATE parametros SET empresa = :empresa, logo = :logo, favicon = :favicon, telefono = :telefono, whatsapp = :whatsapp, direccion = :direccion, email = :email, horario = :horario, facebook = :facebook, instagram = :instagram, twitter = :twitter, youtube = :youtube, google_maps = :google_maps, descripcion = :descripcion, titulo_inicio = :titulo_inicio,  desc_inicio = :desc_inicio, sobre_nosotros = :sobre_nosotros  WHERE id = '$id'";
+        $sql = "UPDATE parametros SET empresa = :empresa, logo = :logo, favicon = :favicon, telefono = :telefono, whatsapp = :whatsapp, direccion = :direccion, email = :email, horario = :horario, facebook = :facebook, instagram = :instagram, twitter = :twitter, youtube = :youtube, google_maps = :google_maps, descripcion = :descripcion, sobre_nosotros = :sobre_nosotros  WHERE id = '$id'";
 
         $data = array(
           'empresa' => $empresa,
@@ -62,8 +60,6 @@
           'youtube' => $youtube,
           'google_maps' => $google_maps,
           'descripcion' => $descripcion,
-          'titulo_inicio' => $titulo_inicio,
-          'desc_inicio' => $desc_inicio,
           'sobre_nosotros' => $sobre_nosotros
         );
 
@@ -230,12 +226,6 @@ desired effect
 
             <label>Google Maps</label>
             <input type="text" name="google_maps" value="<?php echo $parametro['google_maps']; ?>" class="form-control">
-
-            <label>Titulo del Inicio</label>
-            <input type="text" name="titulo_inicio" value="<?php echo $parametro['titulo_inicio']; ?>" class="form-control" required>
-
-            <label>Descrición del Inicio</label>
-            <input type="text" name="desc_inicio" value="<?php echo $parametro['desc_inicio']; ?>" class="form-control" required>
 
             <label>Sobre Nosotros</label>
             <input type="text" name="sobre_nosotros" value="<?php echo $parametro['sobre_nosotros']; ?>" class="form-control" required>

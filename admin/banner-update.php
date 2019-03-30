@@ -12,57 +12,59 @@
     $id = $_GET['id'];
 
     try {
-      $sql = "SELECT * FROM cursos WHERE id = '$id'";
+      $sql = "SELECT * FROM banner WHERE id = '$id'";
       $query = $connection->prepare($sql);
       $query->execute();
       $total= $query->rowCount();     
     } catch (Exception $e) {
       echo $e;
     }
-  }
 
-  if (isset($_POST) && isset($_POST['actualizar']) == 'actualizar') {
-     if($_POST['nombre'] != '' && $_POST['descripcion_corta'] != '' && $_POST['descripcion_detallada'] != '' && $_POST['imagen'] != '' && $_POST['precio'] != '' && $_POST['duracion'] != '' && $_POST['dias'] != '') {
+    if (isset($_POST) && isset($_POST['actualizar']) == 'actualizar') {
+
+      if($_POST['titulo'] != '' && $_POST['descripcion'] != '' && $_POST['imagen'] != '' && $_POST['posicion'] != '' ) {
         //Capturar os dados recebido do formuário via post e guardar em variables
-        $nombre = $_POST['nombre'];
-        $descripcion_corta = $_POST['descripcion_corta'];
-        $descripcion_detallada = $_POST['descripcion_detallada'];
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
         $imagen = $_POST['imagen'];
-        $precio = $_POST['precio'];
-        $duracion = $_POST['duracion'];
-        $dias = $_POST['dias'];
+        $posicion = $_POST['posicion'];
+        $titulobtn = $_POST['titulobtn'];
+        $url = $_POST['url'];
         $activo = $_POST['activo'];
 
-        $sql = "UPDATE cursos SET nombre = :nombre, descripcion_corta = :descripcion_corta, descripcion_detallada = :descripcion_detallada, imagen = :imagen , precio = :precio, duracion = :duracion, dias = :dias, activo = :activo, fecha_update = NOW() WHERE id = '$id'";
+        $sql = "UPDATE banner SET titulo = :titulo, descripcion = :descripcion, imagen = :imagen, posicion = :posicion, titulobtn = :titulobtn, url = :url, activo = :activo WHERE id = '$id'";       
 
         $data = array(
-          'nombre' => $nombre,
-          'descripcion_corta' => $descripcion_corta,
-          'descripcion_detallada' => $descripcion_detallada,
+          'titulo' => $titulo,
+          'descripcion' => $descripcion,
+          'posicion' => $posicion,
           'imagen' => $imagen,
-          'precio' => $precio,
-          'duracion' =>$duracion,
-          'dias' => $dias,
+          'titulobtn' => $titulobtn,
+          'url' =>$url,
           'activo' => $activo
         );
 
-        $query = $connection->prepare($sql);
+         $query = $connection->prepare($sql);
 
         try {
           $query->execute($data);
           $mensaje = '<p class="alert alert-success"> Registro ACTUALIZADO correctamente</p>';
+          // $mensaje = $sql;
           $_SESSION['mensaje'] = $mensaje;
           //var_dump($_SESSION['mensaje']);
           //Redirecionamos al listado de usuários com javascript
-          echo '<script> window.location = "cursos.php"; </script>';
+          echo '<script> window.location = "banner.php"; </script>';
         } catch (Exception $e) {
           $mensaje = '<p class="alert alert-danger">' . $e . '</p>';
           $_SESSION['mensaje'] = $mensaje;
           echo '<script> window.location = "cursos.php"; </script>';
         }
-      }
-  }
 
+        // var_dump($mensaje);
+      }
+
+    }   
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,12 +100,11 @@
   <script>
     function subir_imagen(input, carpeta){
           self.name = 'opener';
-          var name = document.getElementsByName("nombre")[0].value;
+          var name = document.getElementsByName("titulo")[0].value;
           remote = open('gestor/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
           remote.focus();
         }
   </script>
-  <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -130,6 +131,7 @@ desired effect
 
   <!-- Main Header -->
   <?php include 'includes/header.php'; ?>
+
   <!-- Left side column. contains the logo and sidebar -->
   <?php include 'includes/aside.php'; ?>
 
@@ -138,7 +140,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Registro de Cursos   <a href="cursos.php" class="btn btn-success">Lista de Cursos</a>      
+        Registro de Banner   <a href="banner.php" class="btn btn-success">Lista de Banner</a>      
       </h1>
       
       <ol class="breadcrumb">
@@ -152,47 +154,39 @@ desired effect
        
     <!-- Formulário -->
     <div class="col-sm-12">       
-      <div class="panel row">            
+      <div class="panel row"> 
         <?php 
             //include 'includes/mensajes.php';
             if ($total > 0) {
-              $curso = $query->fetch();
+              $banner = $query->fetch();
 
               //var_dump($curso);
             }
-        ?>
+        ?>           
         <form action="" method="POST" name="form">
           <div class="form-group col-md-6">
-            <label>Nombre del Curso</label>
-            <input type="text" name="nombre" value="<?php echo $curso['nombre']; ?>" class="form-control" required>
-
-            <label>Descripción Corta</label>
-            <input type="text" name="descripcion_corta" value="<?php echo $curso['descripcion_corta']; ?>" class="form-control" required>
-
-            <label>Descripción Detallada</label>
-            <!-- <input type="text" name="descripcion_detallada" value="<?php //echo $curso['descripcion_detallada']; ?>"class="form-control" required> -->
-            <textarea name="descripcion_detallada" class="form-control" required>
-              <?php echo $curso['descripcion_detallada']; ?>
-            </textarea>
-
-            
-            <label>Precio</label>
-            <input type="text" name="precio" value="<?php echo $curso['precio']; ?>" class="form-control">
-
-            <label>Duración</label>
-            <input type="text" name="duracion" value="<?php echo $curso['duracion']; ?>" class="form-control">
-
-            <label>Días</label>
-            <input type="text" name="dias" value="<?php echo $curso['dias']; ?>" class="form-control">
-
             <label>Imagen</label>
-            <input type="text" name="imagen" class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'imagenes')" value="<?php echo $curso['imagen']; ?>">
-            <!-- <input type="text" name="imagen" value="<?php //echo $curso['imagen']; ?>" class="form-control"> -->
+            <input type="text" name="imagen" class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'imagenes')" value="<?php echo $banner['imagen']; ?>">
+
+            <label>Titulo</label>
+            <input type="text" name="titulo" value="<?php echo $banner['titulo']; ?>" class="form-control" required>
+
+            <label>Descripción</label>
+            <input type="text" name="descripcion" value="<?php echo $banner['descripcion']; ?>" class="form-control" required>
+
+            <label>Titulo Botón</label>
+            <input type="text" name="titulobtn" value="<?php echo $banner['titulobtn']; ?>" class="form-control">
+
+            <label>Url</label>
+            <input type="text" name="url" value="<?php echo $banner['url']; ?>" class="form-control" required>
+
+            <label>Posición</label>
+            <input type="text" name="posicion" value="<?php echo $banner['posicion']; ?>" class="form-control" required>
 
             <label>Activo</label>
             <select class="form-control" name="activo">
-              <option value="1" <?php if ($curso['activo'] == '1') { echo " selected";} ?> >Sí</option>
-              <option value="0" <?php if ($curso['activo'] == '0') { echo " selected";} ?> >No</option>
+              <option value="1" <?php if ($banner['activo'] == '1') { echo " selected";} ?> >Sí</option>
+              <option value="0" <?php if ($banner['activo'] == '0') { echo " selected";} ?> >No</option>
             </select>
             
             <br>
@@ -225,11 +219,8 @@ desired effect
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
-<script>
-  CKEDITOR.replace( 'descripcion_detallada' );
-</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
 </body>
-</html>  
+</html>
